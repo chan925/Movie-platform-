@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Search</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <input type="text" id="searchBox" placeholder="Search movies...">
+  <div id="results"></div>
+
+  <script>
+    document.getElementById("searchBox").addEventListener("input", function() {
+      const term = this.value.toLowerCase();
+      // Simple search filtering
+      fetch('php/fetch_movies.php').then(res => res.json()).then(data => {
+        const results = data.filter(movie => movie.title.toLowerCase().includes(term));
+        document.getElementById("results").innerHTML = results.map(m => `<p>${m.title}</p>`).join("");
+      });
+    });
+  </script>
+</body>
+</html>
